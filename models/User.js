@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 // A new instance (called User) of the Mongoose schema to define shape of each document
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
     {
         username: { 
             type: String, 
@@ -14,21 +14,22 @@ const userSchema = new mongoose.Schema(
             required: true,
             unique: true, 
             trim: true,
-            email: {
-                validate: [ isEmail, 'invalid email']
-            }
+            validate: {
+                validator: () => Promise.resolve(false),
+                message: 'Email validation failed'
+              }
         },
 
         thoughts: [
             {
-                type: Schema.Type.ObjectId,
-                ref: 'Thought',
+                type: Schema.Types.ObjectId,
+                ref: 'thought',
             }
         ],
         friends: [
             {
-                type: Schema.Type.ObjectId,
-                ref: 'User',
+                type: Schema.Types.ObjectId,
+                ref: 'user',
             }
         ]
     },
@@ -40,12 +41,13 @@ const userSchema = new mongoose.Schema(
     }
   );
 
+
   //Vertual property friendCount
-  userSchema.vertual('friendCount').get(function () {
+  userSchema.virtual('friendCount').get(function () {
     return this.friends.length;
   });
 
-  //Initialising the User model 
-  const User = model('user', userSchema);
+//Initialising the User model 
+const User = model('user', userSchema);
 
-  module.exports = userSchema;
+  module.exports = User;
