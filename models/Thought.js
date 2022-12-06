@@ -43,8 +43,8 @@ const thoughtSchema = new Schema(
             type: String, 
             required: true,
         },
-        reactions: {
-            reactions: [reactionSchema],
+        reaction: {
+            reaction: [reactionSchema],
         },
     },
     {
@@ -57,7 +57,7 @@ const thoughtSchema = new Schema(
 
 //Vertual property 
 thoughtSchema.virtual('reactionCount').get(function () {
-    return this.reactions.length;
+    return this.reaction.length;
 });
 
 //Initialing thought model 
