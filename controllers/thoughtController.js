@@ -32,4 +32,20 @@ module.exports = {
                 res.status(500).json(err);
             });
     },
+    // Update a thought 
+    updateThought(req, res) {
+        Thought.findByIdAndUpdate(
+            { _id: req.params.thoughtId },
+            { $set: req.body },
+            { new: true }
+        )
+            .then((user) => 
+                !user
+                ? res.status(404).json({ message: 'No thought was found with this ID' })
+                : res.status(user)
+            )
+            .catch((err) => res.status(500).json(err));
+    }, 
+
+
 };
