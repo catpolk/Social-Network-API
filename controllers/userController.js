@@ -52,6 +52,20 @@ module.exports = {
             .then(() => res.json({ message: 'User and assosiated thought was deleted!'}))
             .catch((err) => res.status(500).json(err));
    },
+   // add a friend route 
+   addFriend(req, res) {
+    User.findByIdAndUpdate(
+        { _id: req.params.userId },
+        { $addToSet:  { friends: req.params.friendId } },
+        { new: true }
+        )
+        .then((user) => 
+            !user
+            ? res.status(404).json({ message: 'No user is found with this ID' })
+            : res.json(user)             
+        )
+        .catch((err) => res.status(500).json(err));
+   },
 
 };
     
