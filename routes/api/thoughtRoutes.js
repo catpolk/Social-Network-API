@@ -3,12 +3,14 @@ const {
   getSingleThought,
   getThought,
   createThought,
-  updateThought
+  updateThought,
+  deleteThought
 } = require('../../controllers/thoughtController');
 
 router.route('/')
 .get(getThought)
-.post(createThought);
+.post(createThought)
+.delete(deleteThought);
 
 router.route('/:thoughtId')
 .get(getSingleThought)
