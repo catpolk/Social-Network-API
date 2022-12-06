@@ -3,7 +3,7 @@ const { Thought, User } = require('../models');
 module.exports = {
     getThought(req, res) {
         Thought.find()
-            .populate({ path: 'users', select: '-_v'})
+            // .populate({ path: 'users', select: '-_v'})
             .then((thoughts) => res.json(thoughts))
             .catch((err) => res.status(500).json(err));
     },
@@ -15,7 +15,7 @@ module.exports = {
                     : res.json(thought)
             )
     }, 
-    //create new thought 
+    //create a new thought 
     createThought(req, res) {
         Thought.create(req.body)
             .then((thought) => {
