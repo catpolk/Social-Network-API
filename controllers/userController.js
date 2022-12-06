@@ -1,17 +1,17 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
  
 module.exports = {
     getUsers(req, res) {
         User.find()
-            // .populate({ path: 'users', select: '-_v'})
+            // .populate({ path: 'user', select: '-_v'})
             .then((user) => res.json(user))
             .catch((err) => res.status(500).json(err)); 
    },
    // Get a single user 
-   getSingleUser(req, res) {
+    getSingleUser(req, res) {
     User.findOne({_id: req.params.userId})
-        .populate('thoughts')
-        .populte('friends')
+        // .populate('thought')
+        // .populte('friends')
         .select('-_v')
         .then((user) => 
         !user
@@ -28,17 +28,24 @@ module.exports = {
    },
 
    // Update a user
-   updateUser(req, res) {
+    updateUser(req, res) {
     User.findByIdAndUpdate(
         {_id: req.params.userId },
-        { $set: req.body },
-        { runValidators: true, new: true }
+        // addToSet allows to add an item to an array or to a subdoc
+        { $addToSet: req.body },
+        { new: true }
     )
     .then((user) => 
         !user
         ? res.status(404).json({ message: 'User wiht this ID is not found!' })
         : res.json(user)
         )
+   },
+    // Delete User by ID 
+    deleteUser(req, res) {
+    User.findByIdAndDelete(
+        { _id: req.params.userId }
+    )
    }
 
 };
