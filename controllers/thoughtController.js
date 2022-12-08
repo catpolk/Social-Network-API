@@ -19,6 +19,11 @@ module.exports = {
     createThought(req, res) {
         Thought.create(req.body)
             .then((thought) => {
+                return User.findOneAndUpdate(
+                    { _id: req.body.userId },
+                    { $push: { thoughts: thought._id } },
+                    { new: true }
+                  );
             })
             .then((user) => 
                 !user
@@ -62,9 +67,10 @@ module.exports = {
     },
     // Create a reaction 
     createReaction(req, res) {
+        console.log(req.body);
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $addToSet: {reactions: req.params.reactionId } },
+            { $addToSet: {reactions: req.body } },
             { new: true }
         )
         .then((thought) => 
@@ -80,15 +86,18 @@ module.exports = {
    deleteReaction( req, res ) {
     Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        // { $pull: { reaction: { reactionId: req.params.reactionId } } },
+        { $pull: { reactions: { reactionId: req.params.reactionId } } },
         { new: true }
     )
     .then(
         (thought) => 
             !thought 
                 ? res.status(400).json({ message: 'No reaction is found with ID' })
-                : res.json(user)
+                : res.json(thought)
     )
-    .catch((err) => res.status(500).json(err));
+    .catch((err) => {
+        console.log(err)
+        res.status(500).json(err)
+    })
    },
 };

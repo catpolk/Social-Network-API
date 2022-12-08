@@ -16,19 +16,9 @@ const userSchema = new Schema(
             trim: true,
             match: [/.+@.+\..+/, 'Must match an email address!']
         },
-
-        thought: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'thought',
-            }
-        ],
-        friend: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'user',
-            }
-        ]
+        
+        thoughts: [{ type: Schema.Types.ObjectId, ref: 'thought' }],
+        friends: [{ type: Schema.Types.ObjectId, ref: 'user' }]
     },
     {
         tpJSON: {
@@ -47,4 +37,4 @@ const userSchema = new Schema(
 //Initialising the User model 
 const User = model('user', userSchema);
 
-  module.exports = User;
+module.exports = User;
