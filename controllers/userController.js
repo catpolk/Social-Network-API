@@ -32,7 +32,7 @@ module.exports = {
     User.findByIdAndUpdate(
         {_id: req.params.userId },
         // addToSet allows to add an item to an array or to a subdoc
-        { $addToSet: req.body },
+        { $set: req.body },
         { new: true }
     )
     .then((user) => 
