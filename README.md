@@ -11,3 +11,7 @@ This is an API for a social network web application where users can share their 
 - This application solce a problem of keeping and tracking friend list, users, thoughts, and reactions. Potentially this application could grow into a bigger project. 
 - What did you learn?
 - I learned how to use MongoDB, mongoose, and express. 
+
+- Video: https://drive.google.com/file/d/1gddjAs22LzDAaH7jFJTLWF588mAjN5iv/view?usp=share_link
+
+- Github: https://github.com/catpolk/world-connect-social-network
